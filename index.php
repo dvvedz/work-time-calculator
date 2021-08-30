@@ -25,6 +25,17 @@
 				width: 400px;
 				margin: 0 auto;
 			}
+			#clickToCopy {
+				color: grey;
+			}
+
+			::-moz-selection { /* Code for Firefox */
+				background: white;
+			}
+
+			::selection {
+				background: white;
+			} 
 		</style>
 	</head>
 	<body>
@@ -58,8 +69,8 @@
 					<input type="submit" name="submit" value="Calculate"/>
 				</form>
 				<br>
-
-				<?= "<input id='final_time' onclick='final_time()' value='" . $final_time . "'><button onclick='final_time()'>copy time</button>" ?>
+				<label id="clickToCopy"><small>Click to copy</snall></label>
+				<?= "<input id='final_time' onclick='final_time()' value='" . $final_time . "'" ?>
 			
 			</div>
 		</div>
