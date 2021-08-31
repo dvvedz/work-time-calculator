@@ -40,7 +40,7 @@
 	</head>
 	<body>
 		<?php
-			$format_time;
+			$final_time = "";
 			if(isset($_GET['start_time']) && isset($_GET['end_time']) && isset($_GET['lunch_brake'])){
 				$start_time = new DateTime(htmlspecialchars($_GET['start_time']));
 				$end_time = new DateTime(htmlspecialchars($_GET['end_time']));
@@ -55,22 +55,24 @@
 
 			}
 		?>
+
 		<div class="container">
 
 			<h1>Shitty php time calculator</h1>	
 			<div class="box1">
 				<form action="index.php" method="GET">
 					<label for="start_time">Start time</label>
-					<input type="time" name="start_time" value="08:00"/>
+					<input type="time" name="start_time" value="<?= htmlspecialchars(isset($_GET['start_time'])) ? htmlspecialchars($_GET['start_time']) : "08:00"; ?>"/>
 					<label for="end_time">End Time</label>
-					<input type="time" name="end_time" value="16:00"/>
+					<input type="time" name="end_time" value="<?= htmlspecialchars(isset($_GET['end_time'])) ? htmlspecialchars($_GET['end_time']) : "16:00"; ?>"/>
 					<label for="lunch_break">Lunch Break</label>
-					<input type="number" name="lunch_brake" value="33"/>
+					<input type="number" name="lunch_brake" value="<?= htmlspecialchars(isset($_GET['lunch_brake'])) ? htmlspecialchars($_GET['lunch_brake']) : 30; ?>"/>
 					<input type="submit" name="submit" value="Calculate"/>
 				</form>
 				<br>
 				<label id="clickToCopy"><small>Click to copy</snall></label>
-				<?= "<input id='final_time' onclick='final_time()' value='" . $final_time . "'" ?>
+
+				<?= "<input id='final_time' onclick='final_time()' value='" . $final_time . "'>"; ?>
 			
 			</div>
 		</div>
@@ -84,6 +86,6 @@
 				navigator.clipboard.writeText(copyText.value);
 				alert("Copied the text: " + copyText.value);
 			}
-			</script>
+		</script>
 	</body>
 </html>
