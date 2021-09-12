@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="se" charset="UTF-8">
 	<head>
-		<title> Shitty php time calculator</title>
+		<title>Shitty php time calculator</title>
 		<style>
 			* {
 				padding: 0;
@@ -63,10 +63,21 @@
 			#copyField::-moz-selection{
 				background: white ;
 			}
+			#field-error {
+				background: red;
+				width: 100%;
+				display: inline-block;
+				padding: 10px;
+				color: white;
+			}
+			#shitty {
+				text-decoration: line-through;
+			}
 			
 		</style>
 	</head>
 	<body>
+		
 		<?php 
 			$file = "log.json";
 			$file_not_exists = filesize($file) == 0;
@@ -84,8 +95,18 @@
 			endif;
 		?>
 		<div class="container">
+			
+			<h1><span id="shitty">Shitty</span> php time calculator</h1>	
 
-			<h1>Shitty php time calculator</h1>	
+			<?php
+				session_start();
+				if( isset($_SESSION['field_error']) ) {
+					echo "<span id='field-error'>". $_SESSION['field_error'] . "</span>";
+				
+					unset($_SESSION['field_error']);
+					session_write_close();
+				}
+			?>
 			<div class="box1">
 				<form action="calculate-time.php" method="POST">
 					<label for="start_time">Start time</label>
@@ -102,6 +123,7 @@
 			</div>
 			<div class="box2">
 				<h1>Log</h1>
+				<button onclick="delteLog()">Delete all records</button>
 
 				<?php if(!filesize($file) == 0): ?>
 
@@ -141,6 +163,15 @@
 				copyText.setSelectionRange(0, 99999);
 				navigator.clipboard.writeText(copyText.value);
 				alert("Copied the text: " + copyText.value);
+			}
+			function delteLog() {
+				$.ajax({
+					type: "DELETE",
+					url: '/log.php',
+					success: function(html) {
+						return ""
+					}
+				});
 			}
 		</script>
 	</body>
